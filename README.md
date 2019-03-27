@@ -1,4 +1,4 @@
-﻿![Autom]
+## Autom
 
 The program is based on the NBFC source code - NoteBook FanControl.
 The function of reading the EC register 0х0B is taken specifically. There is a processor temperature in it.
