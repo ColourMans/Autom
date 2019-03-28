@@ -1,4 +1,5 @@
 ﻿#NoEnv
+#MaxHotkeysPerInterval 1000
 SendMode Input
 SetWorkingDir %A_ScriptDir%
 #SingleInstance ignore
@@ -7,6 +8,7 @@ Menu, Tray, NoStandard
 Menu, Tray, Icon, C:\Progs\Autom\burn.ico,1,1
 Menu, Tray, Add, E&xit, ExitHandler
 
+InstRun := 0
 temp  := 45
 temp2 := 45
 temp3 := 45
@@ -45,6 +47,14 @@ if (temp3 <= 66)
     }
 }
 Sleep, 11197
+Process, Exist, WinUAPEntry.exe
+if ErrorLevel
+{ InstRun := 1 
+}
+else 
+{ InstRun := 0 
+}
+
 Goto, Metka1
 return
 
@@ -53,8 +63,34 @@ ExitApp
 return
 
 MButton::Send {F11}
+return
+
 XButton1::Send ^v
+return
+
 XButton2::Send ^c
-WheelLeft::Send {Volume_Down}
-WheelRight::Send {Volume_Up}
+return
+
+WheelLeft::
+if (InstRun == 0)
+{ Send {Volume_Down}
+}
+else { IfWinActive, Instagram
+       { Send {WheelLeft}
+       }
+       else { Send {Volume_Down}
+       }
+}
+return
+
+WheelRight::
+if (InstRun == 0)
+{ Send {Volume_Up}
+}
+else { IfWinActive, Instagram
+       { Send {WheelRight}
+       }
+       else { Send {Volume_Up}
+       }
+}
 return
